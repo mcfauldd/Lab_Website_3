@@ -1,0 +1,148 @@
+<% include ../partials/header %>
+<% include ../partials/menu %>
+<div class="container">
+    <br>
+    <div class="row">
+	<div class="col-4">
+	    <div class="card">
+		<!-- TODO: Modify the ejs code below, to conditionally set the image_src to be from our chosen player -->
+		<%
+		if(specificInfo == "NOT_SET"){
+		    console.log(nameAndID);
+		    var image_src = '../resources/img/helmet.jpg';
+		}
+		else{
+		    var image_src = '../resources/img/player' + specificInfo[0].id + '.jpg';
+		}
+		%>
+		<img class="card-img-top" id="player_img" src= "<%- image_src %>" alt="Image of Football Player">
+		<div class="card-body mx-auto">
+		    <form class="form" action="/player_info/post" method="get">
+			<select class="custom-select" name="player_choice" onchange="this.form.submit()">
+			    <option selected>Select Player</option>
+			    <!-- TODO: Populate our select with player options
+				 For each player, set a new option with a value matching the palyer's id, 
+				 but will display the player's name-->
+			    <%
+			    if(nameAndID){
+				var options = '';
+				for(i = 0; i < nameAndID.length; i++){
+				    options += '<option value=' + nameAndID[i].id + '>' + nameAndID[i].name + '</option>';
+				};
+			    %>
+			    
+			    <%- options %>
+			    
+			    <%}
+			    %>
+			</select>
+		    </form>
+		</div>
+	    </div>
+	</div>
+	<div class="col-8">
+	    <div class="table-responsive">
+		<table class="table">
+		    <tr>
+			<!-- TODO: Set Player Information
+			     If a player has been selected, fill in their information in each of the fields below.
+			     You'll need to calculate here the player's average rushing, receiving, and passing yards.-->
+			<th>Year</th>
+			<% if(specificInfo != "NOT_SET"){
+			    var tag = '';
+			    tag = '<td>' + specificInfo[0].year + '</td>';
+			%>
+			<%- tag %>
+			<%
+			}
+			%>
+		    </tr>
+		    <tr>
+			<th>Major</th>
+			<% if(specificInfo != "NOT_SET"){
+			    var tag = '';
+			    tag = '<td>' + specificInfo[0].major + '</td>';
+			%>
+			<%- tag %>
+			<%
+			}
+			%>
+		    </tr>
+		    <tr>
+			<th>Games Played</th>
+			<% if(specificInfo != "NOT_SET"){
+			    var tag = '';
+			    tag = '<td>' + specificGames[0].count + '</td>';
+			%>
+			<%- tag %>
+			<%
+			}
+			%>
+		    </tr>
+		    <tr>
+			<td>Passing Yards: </td>
+			<% if(specificInfo != "NOT_SET"){
+			    var tag = '';
+			    tag = '<td>Passing Yards: ' + specificInfo[0].passing_yards + '</td>';
+			%>
+			<%- tag %>
+			<%
+			}
+			%>
+			<td>Avg. Passing Yards: </td>
+			<% if(specificInfo != "NOT_SET"){
+			    var tag = '';
+			    tag = '<td>Avg. Passing Yards: ' + specificInfo[0].passing_yards/specificGames[0].count + '</td>';
+			%>
+			<%- tag %>
+			<%
+			}
+			%>
+		    </tr>
+		    <tr>
+			<td>Rushing Yards: </td>
+			<% if(specificInfo != "NOT_SET"){
+			    var tag = '';
+			    tag = '<td>Rushing Yards: ' + specificInfo[0].rushing_yards + '</td>';
+			%>
+			<%- tag %>
+			<%
+			}
+			%>
+			<td>Avg. Rushing Yards: </td>
+			<% if(specificInfo != "NOT_SET"){
+			    var tag = '';
+			    tag = '<td>Avg. Rushing Yards: ' + specificInfo[0].rushing_yards/specificGames[0].count + '</td>';
+			%>
+			<%- tag %>
+			<%
+			}
+			%>
+		    </tr>
+		    <tr>
+			<td>Receiving Yards: </td>
+			<% if(specificInfo != "NOT_SET"){
+			    var tag = '';
+			    tag = '<td>Receiving Yards: ' + specificInfo[0].receiving_yards + '</td>';
+			%>
+			<%- tag %>
+			<%
+			}
+			%>
+			<td>Avg. Receiving Yards: </td>
+			<% if(specificInfo != "NOT_SET"){
+			    var tag = '';
+			    tag = '<td>Avg. Receiving Yards: ' + specificInfo[0].receiving_yards/specificGames[0].count + '</td>';
+			%>
+			<%- tag %>
+			<%
+			}
+			%>
+		    </tr>
+		</table>
+	    </div>
+	</div>
+    </div>
+</div>
+
+<% include ../partials/footer %>
